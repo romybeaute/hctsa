@@ -69,12 +69,23 @@ end
 % ------------------------------------------------------------------------------
 % First check if you're about to overwrite an existing file
 % ------------------------------------------------------------------------------
+% if exist(['./',outputFile],'file')
+%     reply = input(sprintf(['Warning: %s already exists -- if you continue, this ' ...
+%         'file will be overwritten.\n[press ''y'' to continue] '],outputFile),'s');
+%     if ~strcmp(reply,'y')
+%         return
+%     end
+% end
+
 if exist(['./',outputFile],'file')
-    reply = input(sprintf(['Warning: %s already exists -- if you continue, this ' ...
-        'file will be overwritten.\n[press ''y'' to continue] '],outputFile),'s');
-    if ~strcmp(reply,'y')
-        return
-    end
+    % Get the full, absolute path for the message
+    fullFilePath = fullfile(pwd, outputFile);
+    
+    % Print a message that the file is being overwritten
+    fprintf('Warning: File already present at %s. Overwriting.\n', fullFilePath);
+    
+    % By not having 'input' or 'return', the script will now
+    % automatically continue and overwrite the file.
 end
 
 %-------------------------------------------------------------------------------
